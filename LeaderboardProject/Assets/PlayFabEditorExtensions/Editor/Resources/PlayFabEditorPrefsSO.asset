@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d0199c11aa6f514784c5c69cd8378d8, type: 3}
+  m_Name: PlayFabEditorPrefsSO
+  m_EditorClassIdentifier: 
+  DevAccountEmail: ianw03@icloud.com
+  DevAccountToken: tru31qumsd7wu6yumwbt65roimt7nwwh56hb49qagkha53jsem3jqkumyagmfm137xriua4rng4e8yjb64u75h45a6g7y3x3ofqdfrufstb1tcuwrb6hharutgan1ycf9c6yxkzg963zs3oo496cw1ybcz1mfkafbcfg5tdgzye8u57u146rp97d991y7u7hsz6db6te
+  AadAuthorization: 
+  SelectedStudio: SIM 251 Leaderboard
+  SdkPath: Assets/PlayFabSDK
+  EdExPath: 
+  LocalCloudScriptPath: 
+  PanelIsShown: 0
+  curMainMenuIdx: 1
+  curSubMenuIdx: 0
