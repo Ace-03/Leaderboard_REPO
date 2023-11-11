@@ -15,7 +15,7 @@ public class Leaderboard : MonoBehaviour
 
     public void OnLoggedIn()
     {
-        leaderboardCanvas.SetActive(false);
+        leaderboardCanvas.SetActive(true);
         DisplayLeaderboard();
     }
 
@@ -40,7 +40,8 @@ public class Leaderboard : MonoBehaviour
         };
         PlayFabClientAPI.GetLeaderboard(getLeaderboardRequest,
             result => UpdateLeaderboardUI(result.Leaderboard),
-            error => Debug.Log(error.ErrorMessage));
+            error => Debug.Log(error.ErrorMessage)
+            );
     }
 
     void UpdateLeaderboardUI(List<PlayerLeaderboardEntry> leaderboard)
@@ -51,7 +52,22 @@ public class Leaderboard : MonoBehaviour
             if (x >= leaderboard.Count) continue;
 
             leaderboardEntries[x].transform.Find("PlayerName").GetComponent<TextMeshProUGUI>().text = (leaderboard[x].Position + 1) + ". " + leaderboard[x].DisplayName;
-            leaderboardEntries[x].transform.Find("ScoreText").GetComponent<TextMeshProUGUI>().text = (-(float)leaderboard[x].StatValue * 0.001f).ToString();
+            leaderboardEntries[x].transform.Find("ScoreText").GetComponent<TextMeshProUGUI>().text = (-(float)leaderboard[x].StatValue * 0.001f).ToString("F2");
         }
+    }
+
+    public void SetLeaderboardEntry(int newScore)
+    {
+        ExecuteCloudScriptRequest request = new ExecuteCloudScriptRequest
+        {
+            FunctionName = "UpdateHighscore",
+            FunctionParameter = new { score = newScore }
+        };
+
+        PlayFabClientAPI.ExecuteCloudScript(request,
+            result => DisplayLeaderboard(),
+            error => Debug.Log(error.ErrorMessage)
+            );
+
     }
 }
