@@ -19,22 +19,6 @@ public class Leaderboard : MonoBehaviour
         DisplayLeaderboard();
     }
 
-    public void SetLeaderboardEntry(int newScore)
-    {
-        Debug.Log("SetLeaderboardEntry was called");
-
-        ExecuteCloudScriptRequest request = new ExecuteCloudScriptRequest
-        {
-            FunctionName = "UpdateHighscore",
-            FunctionParameter = new { score = newScore }
-        };
-
-        PlayFabClientAPI.ExecuteCloudScript(request,
-            result => DisplayLeaderboard(),
-            error => Debug.Log(error.ErrorMessage)
-            );
-
-    }
     public void DisplayLeaderboard()
     {
         Debug.Log("DisplayLeaderboard was called");
@@ -52,6 +36,7 @@ public class Leaderboard : MonoBehaviour
             );
         Debug.Log("test 2");
     }
+
     void UpdateLeaderboardUI(List<PlayerLeaderboardEntry> leaderboard)
     {
         Debug.Log("UpdateLeaderboardUI was called");
@@ -60,11 +45,39 @@ public class Leaderboard : MonoBehaviour
         {
             leaderboardEntries[x].SetActive(x < leaderboard.Count);
 
-            if (x >= leaderboard.Count) 
+            if (x >= leaderboard.Count)
                 continue;
 
             leaderboardEntries[x].transform.Find("PlayerName").GetComponent<TextMeshProUGUI>().text = (leaderboard[x].Position + 1) + ". " + leaderboard[x].DisplayName;
             leaderboardEntries[x].transform.Find("ScoreText").GetComponent<TextMeshProUGUI>().text = (-(float)leaderboard[x].StatValue * 0.001f).ToString("F2");
         }
     }
+
+    public void SetLeaderboardEntry(int newScore)
+    {
+        Debug.Log("SetLeaderboardEntry was called");
+
+        ExecuteCloudScriptRequest request = new ExecuteCloudScriptRequest
+        {
+            FunctionName = "UpdateHighscore",
+            FunctionParameter = new { score = newScore }
+        };
+
+        PlayFabClientAPI.ExecuteCloudScript(request,
+            result =>
+            {
+                Debug.Log(result);
+                DisplayLeaderboard();
+                Debug.Log(result.ToJson());
+            },
+            error =>
+            {
+                Debug.Log(error.ErrorMessage);
+                Debug.Log("ERROR");
+            }
+            );
+
+    } 
+
+    
 }
